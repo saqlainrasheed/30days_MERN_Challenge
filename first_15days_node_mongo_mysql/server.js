@@ -7,8 +7,7 @@ const expressLayouts = require('express-ejs-layouts');
 //routes importes
 const indexRouter = require('./routes/index');
 
-
-
+//enviromental variables
 const PORT = 5000 || process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI;
 
