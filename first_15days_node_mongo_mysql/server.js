@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const expressLayouts = require('express-ejs-layouts');
 //routes importes
 const indexRouter = require('./routes/index');
+const authorsRouter = require('./routes/authors');
 
 //enviromental variables
 const PORT = 5000 || process.env.PORT;
@@ -30,7 +31,7 @@ db.once("open",()=>console.log('connected to DB.'));
 
 //using routes
 app.use('/',indexRouter);
-
+app.use('/authors',authorsRouter);
 
 
 //server
