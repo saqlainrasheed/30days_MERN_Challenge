@@ -1,10 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-require('dotenv').config();
-//routes
-const indexRouter = require('./src/routes/index');
+const expressLayouts = require('express-ejs-layouts');
+//routes importes
+const indexRouter = require('./routes/index');
 
 
 
@@ -17,13 +18,16 @@ app.use(bodyParser.json());
 
 // template engine setup
 app.set('view engine', 'ejs');
-app.set('views',__dirname + '/src/views');
+app.set('views',__dirname + '/views');
+app.set('layout','layouts/layout');
+app.use(expressLayouts);
 app.set(express.static('public'));
 
 //db connection to mongoose
-mongoose.connect(MONGO_URI,({useNewUrlParser:true,useUnifiedTopology:true}))
-        .then(res => console.log('conneted to db.'))
-        .catch(err => console.log('Having Error'));
+mongoose.connect(MONGO_URI,({useNewUrlParser:true,useUnifiedTopology:true}));
+const db = mongoose.connection;
+db.on("error",err=>console.log('having an error connecting to DB.'));
+db.once("open",()=>console.log('connected to DB.'));
 
 //using routes
 app.use('/',indexRouter);
