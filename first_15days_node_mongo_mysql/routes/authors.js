@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router(); 
+//importing model
 const Author = require('../models/author');
+
 //all authors route
 router.get('/',async (req,res)=>{
   let searchOptions = {};
@@ -24,7 +26,7 @@ router.get('/new',(req,res)=>{
 })
 
 //create author route
-router.post('', async (req,res) => {
+router.post('/', async (req,res) => {
   const author =  new Author({
     name: req.body.name
   })
