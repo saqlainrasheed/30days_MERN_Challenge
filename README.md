@@ -4,3 +4,4 @@
 1. day1 challange complete hardly managed to commit a basic structure.
 2. day2 challenge comleted learned about view engines setting up layouts and learned about GET and POST methods.
 3. day3 another less productive day as compared to day2 but learned something very important today after getting into an erorr.
+4. day4 done and dusted till now learned about Basic features of routing in express using different libraries in node js and using them efficiently.
