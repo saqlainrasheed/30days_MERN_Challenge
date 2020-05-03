@@ -3,9 +3,16 @@ const app = express();
 const mongoose = require('mongoose');
 require('dotenv').config();
 const expressLayout = require('express-ejs-layouts');
+const bodyParser = require('body-parser');
 const MONGO_URI = process.env.MONGO_URI;
-const index = require('./routes/index');
+const indexRouter = require('./routes/index');
+const postsRouter = require('./routes/posts/posts');
+const usersRouter = require('./routes/users/users');
 
+
+//middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 //template engine setting up
@@ -19,13 +26,15 @@ app.use(express.static('public'));
 //mongoose connection
 mongoose.connect(MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:true});
 const db = mongoose.connection;
-db.once('open',() => console.log('connect to DB'))
-db.on('error',err => console.log('Error connecting to DB'))
+db.once('open',() => console.log('connect to DB'));
+db.on('error',err => console.log('Error connecting to DB'));
 
 
+//routes implimentation
+app.use('/',indexRouter);
+app.use('/posts',postsRouter);
+app.use('/users',usersRouter);
 
-
-app.use('/',index);
 
 //port and server listening
 const PORT = 5000 || process.env.PORT
