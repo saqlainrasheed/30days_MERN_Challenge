@@ -3,17 +3,19 @@ const createNewUser = require('./createNewUser');
 const getAllUsers = require('./getAllUsers');
 const updateUser = require('./updateUser');
 const getSingleUser = require('./getSingleUser');
+const deleteUser = require('./deleteUser');
 
 // create user
 router.post('/new',createNewUser);
 //Read all users
 router.get('/',getAllUsers);
-//update the user email and password
+//update the user email
+// their are some issues here to solve will them later
 router.put('/:id/update',updateUser);
 // Delete user
-router.delete('/:id',);
+router.delete('/:id/delete',deleteUser);
 //get a single user
-router.get('/:id/delete',getSingleUser);
+router.get('/:id',getSingleUser);
 
 
 module.exports = router;
