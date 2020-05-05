@@ -9,6 +9,9 @@ const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts/posts');
 const usersRouter = require('./routes/users/users');
 
+//views directory is still needs to be done will cover this in future
+
+
 
 //middleware
 app.use(bodyParser.urlencoded({ extended: false }));
