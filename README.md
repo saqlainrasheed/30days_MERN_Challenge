@@ -7,4 +7,4 @@
 4. day4 done and dusted till now learned about Basic features of routing in express using different libraries in node js and using them efficiently.
 5. day5 started working hard on my own blogging website setups folder structure and database.
 6. Quiet productive day sets up user and post RESTful api and made seperate file for every methode to use it in future.
-7. Exausting Day got stuck in authentication and authorization 
+7. Exausting Day got stuck in authentication and authorization
