@@ -9,3 +9,5 @@
 6. Quiet productive day sets up user and post RESTful api and made seperate file for every methode to use it in future.
 7. Exausting Day got stuck in authentication and authorization.
 8. Very unporductive day hardly managed to find a time to commit for today although now I can say what are sessions and jwt tokens.
+9. very very poor from me no work done today. I'll punish myself tomorrow until I don't achieve a goal.
+10. with the passage of time I'm now understanding sessions and validation today done not much of work Beacuse I'm stuck in  freelancing work from last two days and finaly done it.

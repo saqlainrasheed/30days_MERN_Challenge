@@ -4,6 +4,8 @@ const app = express();
 require('dotenv').config();
 const mongoose = require('mongoose');
 const mongo_uri = process.env.MONGO_URI;
+const cookieParser = require('cookie-parser');
+const session = require('express-session')
 
 
 //mongo connection
@@ -18,7 +20,18 @@ app.set('view engine', 'ejs');
 app.set('layout','layouts');
 app.use(expressLayouts);
 app.set(express.static('public'));
- 
+app.use(cookieParser()) 
+
+
+
+app.use(session({
+  secret: 'Pakistan',
+  resave: false,
+  saveUninitialized: true,
+  // cookie: { secure: true }
+}));
+
+
 //rutes
 app.get('/', (req, res) => {
   res.render('index.ejs');
