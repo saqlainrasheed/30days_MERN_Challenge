@@ -5,8 +5,8 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const mongo_uri = process.env.MONGO_URI;
 const cookieParser = require('cookie-parser');
-const session = require('express-session')
-
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 //mongo connection
 mongoose.connect(mongo_uri,{useNewUrlParser:true,useUnifiedTopology:true})
@@ -22,7 +22,15 @@ app.use(expressLayouts);
 app.set(express.static('public'));
 app.use(cookieParser()) 
 
-
+//storing sessions
+const store = new MongoDBStore({
+  uri: process.env.mongo_uri,
+  collection: 'mySessions'
+});
+// Catch errors
+store.on('error', function(error) {
+  console.log(error);
+});
 
 app.use(session({
   secret: 'Pakistan',
