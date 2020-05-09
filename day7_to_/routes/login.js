@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-
+const Users = require('../models/User');
+const bcrypt = require('bcrypt');
+const { check, validationResult } = require('express-validator');
 router.get('/login', (req, res) => {
   res.render('login');
 });
@@ -18,25 +20,18 @@ router.post('/login',[check('username').notEmpty(),check('password').isLength({ 
     //express validation
     check('username').notEmpty();
     check('password').isLength({ min: 5 })
-    //finding existing user
+    
     const user = await Users.findOne({
       name : username,
-      password:password
     });
     //rendering register if user already exits
     if(!user) res.render('register',{message : 'Check username or password'});
-    
     else{
-      bcrypt.compare(password, hash).then(function(result) {
-        // result == true
+      bcrypt.compare(password,user.password).then(async function(result) {
+        //finding existing user
+        res.redirect('index');
       });
-            const newUser = await new Users({
-              name:username,
-              email:email,
-              password: hash
-            });
-            newUser.save();
-      };
+    };
   });
 
 module.exports = router;
