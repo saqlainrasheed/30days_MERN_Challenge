@@ -12,3 +12,6 @@
 9. very very poor from me no work done today. I'll punish myself tomorrow until I don't achieve a goal.
 10. with the passage of time I'm now understanding sessions and validation today done not much of work Beacuse I'm stuck in  freelancing work from last two days and finaly done it.
 11. Easy and simpe task done today.
+12. Did not done any thing this day.
+13. still a busy day trying to finish up freelance project.
+14. Finally a long struggle comes to an end now i can build my own site with all the authentication and stuff.
