@@ -22,4 +22,4 @@ const validateLoginInput = ( data ) => {
   };
 }
 
-module.exports = validateLoginPage;
+module.exports = validateLoginInput;

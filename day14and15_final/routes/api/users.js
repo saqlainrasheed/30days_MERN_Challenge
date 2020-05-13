@@ -23,7 +23,7 @@ router.post('/signup',async (req,res)=>{
         if(user.email === email) return res.status(400).json({email:"Email already exists."});
         else return res.status(400).json({user_name:"Username already exists."});
       }else{
-        const newUser = await new Users({
+        const newUser = new Users({
           user_name:user_name,
           email:email,
           password:password,
@@ -37,12 +37,42 @@ router.post('/signup',async (req,res)=>{
             await newUser.save()
               .then(user => res.json(user))
               .catch(err => console.log({error:'Error creating new user.'}));
-          })
-        })
-      }
-    })
+          });
+        });
+      };
+    });
+});
 
+//login route
+router.post('/login',async (req,res)=>{
+  const { errors , isValid } = validateLoginInputs(req.body);
+  const {email,password} = req.body;
+  if(!isValid) res.status(400).json(errors);
+
+  await Users.findOne({email}).then(user=>{
+    if(!user) return res.status(400).json({email:'Email not found.'}); 
+  })
+
+  bcrypt.compare(password,user.password).then(isMatch => {
+    if(isMatch){
+      const payload = {
+        id:user.id,
+        user_name:user.user_name
+      };
+      //jwt implimentation.
+      jwt.sign(payload,secret,{expiresIn:3600},(err,token)=>{
+        if(err) throw err;
+        return res.json({
+          success:true,
+          token:"Bearer" + token
+        });
+      });
+    }
+    else{return res.status(400).json({password:'Password incorret'});}
+  })
 })
+
+
 
 
 module.exports = router;
