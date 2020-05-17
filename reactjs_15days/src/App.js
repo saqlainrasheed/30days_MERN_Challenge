@@ -1,40 +1,41 @@
-import React from 'react';
+import React ,{ Fragment } from 'react';
 import './App.css';
 import 'tachyons';
-import robots from './users';
-import CardList from './components/CardList';
-import SearchBox from './components/SearchBox';
-import Scroll from './components/Scroll'
+import Navbar from './components/Navbar';
+import ImageContainer from './components/ImageContainer';
+import { createClient } from 'pexels';
+
+let client = createClient('563492ad6f91700001000001693c5ff87c43454dbaf1e1a5c041c6d3');
+const query = 'Nature';
+let photos = client
+    .photos
+    .search({query, per_page: 20})
+    .then(photos => photos.photos.forEach(photo => {
+      console.log(photo.url)
+    })
+  )
+
 class App extends React.Component {
   constructor(props){
-    super(props)
+    super(props);
     this.state = {
-      robots : robots
+      query : '',
+      images : []
     }
   }
-  handleSearchChange = (e) => {
-    let keyword = e.target.value.toLowerCase();
-    
+
+  componentDidMount(){
     this.setState({
-      robots : robots.filter(robot => robot.name.toLowerCase().includes(keyword))
+      images:photos
     })
   }
-
-
   render(){
-        if(!true){ 
-          return <h1> Loading... </h1>}
-        else{
-          return (
-            <React.Fragment>
-              <SearchBox onChange={(e) => {this.handleSearchChange(e)}}/>
-              <Scroll>
-                <CardList users={this.state.robots} />
-              </Scroll>
-            </React.Fragment>
-          )
-        }
+    return (
+      <Fragment>
+        <Navbar />
+        <ImageContainer images={this.state.images}/>
+      </Fragment>
+    )
   }
-  
 }
 export default App;
