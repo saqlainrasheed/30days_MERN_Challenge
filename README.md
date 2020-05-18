@@ -24,3 +24,4 @@
 1. learned basics of reactjs using only documentation.
 2. Learned Reactjs today by building a app.
 3. today I tried to build a image gallery using pexels API.
+4. finally completed the gallery app.

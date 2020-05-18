@@ -3,37 +3,45 @@ import './App.css';
 import 'tachyons';
 import Navbar from './components/Navbar';
 import ImageContainer from './components/ImageContainer';
-import { createClient } from 'pexels';
+import axios from 'axios';
 
-let client = createClient('563492ad6f91700001000001693c5ff87c43454dbaf1e1a5c041c6d3');
-const query = 'Nature';
-let photos = client
-    .photos
-    .search({query, per_page: 20})
-    .then(photos => photos.photos.forEach(photo => {
-      console.log(photo.url)
-    })
-  )
+const pexels = axios.create({
+  baseURL:'https://api.pexels.com/',
+  headers:{
+    Authorization:'563492ad6f91700001000001693c5ff87c43454dbaf1e1a5c041c6d3'
+  }
+})
+
+
+
+
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      query : '',
       images : []
     }
   }
-
-  componentDidMount(){
-    this.setState({
-      images:photos
-    })
+  onSearchSubmit = async (term) => {
+    const response = await pexels.get(`/v1/search`, {
+        params: {
+            query: term,
+            per_page: 15,
+            page: 1
+        }
+    });
+    this.setState({ images: response.data.photos });
   }
+  componentDidMount(){
+    this.onSearchSubmit("nature");
+  }
+  
   render(){
     return (
       <Fragment>
-        <Navbar />
-        <ImageContainer images={this.state.images}/>
+        <Navbar onSearchSubmit={this.onSearchSubmit}/>
+        <ImageContainer images={this.state.images} />
       </Fragment>
     )
   }
