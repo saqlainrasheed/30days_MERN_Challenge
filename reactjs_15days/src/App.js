@@ -1,49 +1,91 @@
-import React ,{ Fragment } from 'react';
+import React from 'react';
 import './App.css';
 import 'tachyons';
-import Navbar from './components/Navbar';
-import ImageContainer from './components/ImageContainer';
-import axios from 'axios';
 
-const pexels = axios.create({
-  baseURL:'https://api.pexels.com/',
-  headers:{
-    Authorization:'563492ad6f91700001000001693c5ff87c43454dbaf1e1a5c041c6d3'
-  }
-})
-
-
-
-
-
-class App extends React.Component {
+class App extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-      images : []
+    this.state={
+      newItem:"",
+      list:[]
     }
   }
-  onSearchSubmit = async (term) => {
-    const response = await pexels.get(`/v1/search`, {
-        params: {
-            query: term,
-            per_page: 15,
-            page: 1
-        }
-    });
-    this.setState({ images: response.data.photos });
+
+  updateInput(input){
+    this.setState({newItem:input});
   }
-  componentDidMount(){
-    this.onSearchSubmit("nature");
+
+  addItem(todoValue){
+    if(todoValue){
+      const newItem = {
+        id:Date.now(),
+        value: todoValue,
+        isDone:true
+      }
+      const list = [...this.state.list];
+      list.push(newItem);
+      this.setState({
+        list:list,
+        newItem:""
+      })
+    } 
   }
-  
+
+
+  deleteItem(id){
+    const list = [...this.state.list];
+    const updateList = list.filter(item => item.id !== id);
+    this.setState({
+      list:updateList,
+      newItem:""
+    })
+  }
+
+
   render(){
-    return (
-      <Fragment>
-        <Navbar onSearchSubmit={this.onSearchSubmit}/>
-        <ImageContainer images={this.state.images} />
-      </Fragment>
+    return(
+      <div>
+        {/* input todo */}
+        <div className="container">
+          <h1>Add todo...</h1>
+          <br />
+          <input 
+            type="text"
+            className="input-text"
+            placeholder="Write todo here..." 
+            required
+            value = {this.state.newItem}
+            onChange={e => this.updateInput(e.target.value)}
+          />
+          <button 
+            className="add-btn"
+            onClick={() => this.addItem(this.state.newItem)}
+            disabled={!this.state.newItem.length}
+          >Add todo</button>
+        </div>
+        {/* todolist items */}
+        <div className="list">
+          <ul>
+            {this.state.list.map(item => {
+              return(
+                <li key={item.id}>
+                  <input 
+                    type="checkbox"
+                    name="isDone"
+                    checked={item.isDone}
+                    onChange={()=>{}}
+                  />
+                  {item.value}
+                  <button 
+                    className="btn"
+                    onClick={()=>this.deleteItem(item.id)}>Delete</button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
     )
-  }
+  } 
 }
 export default App;
