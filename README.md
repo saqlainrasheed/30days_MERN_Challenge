@@ -29,3 +29,4 @@ due to Shortage of space I only created a one create-react-app and manipulate it
 3. day18 today I tried to build a image gallery using pexels API.
 4. day19 finally completed the gallery app.
 5. day20 finally I am back after a almost a week and created a small app.
+6. day21 learned routing in react using react-router-dom
